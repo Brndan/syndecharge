@@ -15,5 +15,8 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
+# sortie par défaut du programme
 export.xlsx
+
+# nom par défaut de l'exécutable sous macOS et Linux
 syndecharge

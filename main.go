@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path"
@@ -18,9 +19,13 @@ func main() {
 	rangeStart, rangeEnd := "A25", "J43"
 	outputFile := "export.xlsx"
 	inputFiles := cwd
-	csvFlag := false
-	xlsxFlag := false
+	var (
+		csvFlag     bool
+		xlsxFlag    bool
+		versionFlag bool
+	)
 
+	flag.BoolVar(&versionFlag, "v", false, "Print version info and exit.")
 	flag.StringVar(&rangeStart, "d", rangeStart, "Début de la plage")
 	flag.StringVar(&rangeEnd, "f", rangeEnd, "Fin de la plage")
 	flag.StringVar(&outputFile, "o", outputFile, "Fichier d’export au format Excel")
@@ -29,6 +34,11 @@ func main() {
 	flag.BoolVar(&xlsxFlag, "xlsx", true, "Export XLSX (défaut)")
 
 	flag.Parse()
+
+	if versionFlag == true {
+		fmt.Printf("Date de compilation : %s\nIdentifiant de version : %s", buildTime, sha1ver)
+		os.Exit(0)
+	}
 
 	if csvFlag == true {
 		xlsxFlag = false

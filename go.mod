@@ -1,4 +1,4 @@
-module wyrm.fr/brendan/syndecharge
+module github.com/Brndan/syndecharge
 
 go 1.14
 

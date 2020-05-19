@@ -23,13 +23,22 @@ func main() {
 	// récupération des paramètres
 	getOpts(&options)
 
-	if options.versionFlag == true {
+	switch {
+	case options.versionFlag:
 		fmt.Printf("Date de compilation : %s\nIdentifiant de version : %s", buildTime, sha1ver)
 		os.Exit(0)
-	}
-
-	if options.csvFlag == true {
-		options.xlsxFlag = false
+	case options.syndicatsFlag && !options.sommeFlag && !options.ctsFlag:
+		sumSyndicats(options)
+	case options.sommeFlag && !options.ctsFlag:
+		sumDecharges(options)
+		os.Exit(0)
+	case options.ctsFlag && !options.sommeFlag:
+		sumCTS(options)
+		os.Exit(0)
+	default:
+		fmt.Printf("Vous ne devez utiliser qu'une option parmi -cts, -syndicats, -somme.\nSi vous n’entrez aucune de ces trois options -syndicats est utilisé par défaut.")
+		usage()
+		os.Exit(1)
 	}
 
 	clrange := rangeCoordinates(options.rangeStart, options.rangeEnd)

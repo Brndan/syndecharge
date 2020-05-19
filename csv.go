@@ -22,5 +22,5 @@ func printCSV(file string, clRange cellRange) (err error) {
 			fmt.Printf("\n")
 		}
 	}
-	return err
+	return
 }

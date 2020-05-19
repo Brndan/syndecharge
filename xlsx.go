@@ -1,10 +1,17 @@
 package main
 
 import (
+	"regexp"
+	"strconv"
+
 	"github.com/tealeg/xlsx"
 )
 
+// En-tête pour le fichier des déchargé⋅es de chaque syndicat et les mandats fédéraux
 var header = []string{"Syndicat", "Civilité", "Prénom", "Nom", "Heures décharge", "Min décharge", "Heures ORS", "Min ORS", "Corps", "RNE"}
+
+// En-tête pour la somme de la consommation des syndicats
+var headerSum = []string{"Syndicat", "ETP attribué au syndicat", "Mutualisation Académique", "ETP disponibles pour le syndicat", "Décharges", "Crédit d'Heures (CHS)"}
 
 // Une plage de cellules qui reçoit les coordonnées x,y
 // pour le début et la fin de la plage
@@ -41,12 +48,17 @@ func rangeCoordinates(rangeStart, rangeEnd string) (clr cellRange) {
 func extractRange(file string, clr cellRange, destXlsx xlsxObject) (err error) {
 	fileSlice, err := xlsx.FileToSlice(file)
 	checkErr(err)
-	for row := clr.BeginY; row <= clr.EndY; row++ {
+	for row := clr.BeginY; row < clr.EndY+1; row++ {
 		if fileSlice[0][row][clr.BeginX+1] != "" {
 			destXlsx.Row = destXlsx.Sheet.AddRow()
 			for col := clr.BeginX; col <= clr.EndX; col++ {
 				destXlsx.Cell = destXlsx.Row.AddCell()
-				destXlsx.Cell.Value = fileSlice[0][row][col]
+				if match, _ := regexp.MatchString(`^[-+]?[0-9]*\.?[0-9]+$`, fileSlice[0][row][col]); match {
+					val, _ := strconv.ParseFloat(fileSlice[0][row][col], 64)
+					destXlsx.Cell.SetFloat(val)
+				} else {
+					destXlsx.Cell.Value = fileSlice[0][row][col]
+				}
 			}
 		}
 	}

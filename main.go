@@ -27,7 +27,6 @@ func main() {
 		sumSyndicats(options)
 	default:
 		fmt.Printf("Vous ne devez utiliser qu'une option parmi -cts et -syndicats.\nSi vous n’entrez aucune de ces trois options -syndicats est utilisé par défaut.")
-		usage()
 		os.Exit(1)
 	}
 

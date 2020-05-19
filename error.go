@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 )
 
@@ -11,9 +10,4 @@ func checkErr(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-
-func usage() {
-	fmt.Println(`Usage à 
-	développer`)
 }

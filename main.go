@@ -20,7 +20,7 @@ func main() {
 	options.rangeStart, options.rangeEnd = "A25", "J43"
 	options.outputFile = "export.xlsx"
 	options.inputFiles = cwd
-
+	// récupération des paramètres
 	getOpts(&options)
 
 	if options.versionFlag == true {

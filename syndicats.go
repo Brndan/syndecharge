@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"path/filepath"
 
 	"github.com/tealeg/xlsx"
 )
@@ -30,7 +31,8 @@ func exportSyndicats(opts commandlineFlags) {
 	}
 
 	// Récupère le nom de chaque fichier à traiter
-	fileList, err := ioutil.ReadDir(opts.inputFiles)
+	folderPath, _ := filepath.Abs(opts.inputFiles)
+	fileList, err := ioutil.ReadDir(folderPath)
 	checkErr(err)
 
 	switch {
@@ -42,10 +44,13 @@ func exportSyndicats(opts commandlineFlags) {
 			}
 		}
 		fmt.Printf("\n")
+
+		var fileFullPath string
 		for _, file := range fileList {
+			fileFullPath = filepath.Join(folderPath, file.Name())
 			if checkIfXlsx, _ := path.Match("*.xlsx", file.Name()); checkIfXlsx {
 				fmt.Fprintf(os.Stderr, "%s\n", file.Name())
-				printCSV(file.Name(), clrange)
+				printCSV(fileFullPath, clrange)
 
 			}
 		}
@@ -62,13 +67,17 @@ func exportSyndicats(opts commandlineFlags) {
 
 		}
 
+		var fileFullPath string
 		for _, file := range fileList {
+			fileFullPath = filepath.Join(folderPath, file.Name())
 			if checkIfXlsx, _ := path.Match("*.xlsx", file.Name()); checkIfXlsx {
 				fmt.Fprintf(os.Stderr, "%s\n", file.Name())
-				extractRange(file.Name(), clrange, exportFile)
+				extractRange(fileFullPath, clrange, exportFile)
 			}
 		}
-		err = f.Save(opts.outputFile)
+		outputFullPath, _ := filepath.Abs(opts.outputFile)
+		err = f.Save(outputFullPath)
+		checkErr(err)
 	}
 
 	return

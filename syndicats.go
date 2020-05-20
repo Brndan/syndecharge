@@ -20,13 +20,6 @@ func exportSyndicats(opts commandlineFlags) {
 
 	clrange := rangeCoordinates(opts.rangeStart, opts.rangeEnd)
 
-	f := xlsx.NewFile()
-
-	exportFile.Sheet, err = f.AddSheet("Feuille1")
-	checkErr(err)
-
-	// On crée la première ligne du tableau avec les en-têtes
-	exportFile.Row = exportFile.Sheet.AddRow()
 	var headerBar []string
 
 	switch {
@@ -35,29 +28,48 @@ func exportSyndicats(opts commandlineFlags) {
 	case !opts.syndicatsFlag && opts.ctsFlag:
 		headerBar = headerSum
 	}
-	for _, col := range headerBar {
-		exportFile.Cell = exportFile.Row.AddCell()
-		exportFile.Cell.Value = col
-
-	}
 
 	// Récupère le nom de chaque fichier à traiter
 	fileList, err := ioutil.ReadDir(opts.inputFiles)
 	checkErr(err)
 
-	for _, file := range fileList {
-		if checkIfXlsx, _ := path.Match("*.xlsx", file.Name()); checkIfXlsx {
-			switch {
-			case opts.csvFlag:
+	switch {
+	case opts.csvFlag:
+		for i, col := range headerBar {
+			fmt.Printf("\"%s\"", col)
+			if i < len(headerBar)-1 {
+				fmt.Printf(",")
+			}
+		}
+		fmt.Printf("\n")
+		for _, file := range fileList {
+			if checkIfXlsx, _ := path.Match("*.xlsx", file.Name()); checkIfXlsx {
+				fmt.Fprintf(os.Stderr, "%s\n", file.Name())
 				printCSV(file.Name(), clrange)
-			default:
+
+			}
+		}
+
+	default:
+		f := xlsx.NewFile()
+		exportFile.Sheet, err = f.AddSheet("Feuille1")
+		checkErr(err)
+		// On crée la première ligne du tableau avec les en-têtes
+		exportFile.Row = exportFile.Sheet.AddRow()
+		for _, col := range headerBar {
+			exportFile.Cell = exportFile.Row.AddCell()
+			exportFile.Cell.Value = col
+
+		}
+
+		for _, file := range fileList {
+			if checkIfXlsx, _ := path.Match("*.xlsx", file.Name()); checkIfXlsx {
 				fmt.Fprintf(os.Stderr, "%s\n", file.Name())
 				extractRange(file.Name(), clrange, exportFile)
 			}
 		}
+		err = f.Save(opts.outputFile)
 	}
-
-	err = f.Save(opts.outputFile)
 
 	return
 }

@@ -44,6 +44,9 @@ Excel contenant les déclarations de décharge des syndicats.
 		
 	-o		fichier en sortie. Par défaut, le fichier "export.xlsx" est
 			généré dans le répertoire courant.
+
+	--csv	Au lieu d’exporter un fichier Excel, produit une sortie CSV
+			sur la sortie standard
 		
 	-v		affiche la version et la date de compilation.
 	
@@ -61,6 +64,12 @@ Exemples :
 → Génère un fichier export.xlsx dans le répertoire courant contenant la
 synthèse de tous le temps utilisé par les syndicats à partir des fichiers
 situés dans le répertoire courant.
+
+	synddecharge --cts --begin A25 --end J44 > export.csv
+
+→ Redirige la sortie vers le fichier export.csv. Le programme affiche sur
+la sortie d'erreurs une liste des fichiers traités pour vérification.
+La redirection risque de poser des problèmes d’encodage sous Windows.
 		`)
 	}
 

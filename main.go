@@ -24,7 +24,7 @@ func main() {
 		fmt.Printf("Date de compilation : %s\nIdentifiant de version : %s", buildTime, sha1ver)
 		os.Exit(0)
 	case (options.syndicatsFlag || options.ctsFlag) && !(options.syndicatsFlag && options.ctsFlag):
-		sumSyndicats(options)
+		exportSyndicats(options)
 	default:
 		fmt.Printf("Vous ne devez utiliser qu'une option parmi -cts et -syndicats.\nSi vous n’entrez aucune de ces trois options -syndicats est utilisé par défaut.")
 		os.Exit(1)

@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # Script de construction du programme
 # bash build.sh install → installe le programme dans le GOPATH
@@ -19,5 +19,6 @@ exit 0
 
 fi
 
-env GOOS=linux GOARCH=amd64 go build -ldflags "-X main.sha1ver=`git rev-parse --short HEAD` -X main.buildTime=$now -w -s"  -o dist/ github.com/Brndan/syndecharge
-env GOOS=windows GOARCH=amd64 go build -ldflags "-X main.sha1ver=`git rev-parse --short HEAD` -X main.buildTime=$now -w -s" -o dist/ github.com/Brndan/syndecharge
+env GOOS=linux GOARCH=amd64 go build -ldflags "-X main.sha1ver=`git rev-parse --short HEAD` -X main.buildTime=$now -w -s"  -o dist/linux/ github.com/Brndan/syndecharge
+env GOOS=windows GOARCH=amd64 go build -ldflags "-X main.sha1ver=`git rev-parse --short HEAD` -X main.buildTime=$now -w -s" -o dist/windows/ github.com/Brndan/syndecharge
+env GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.sha1ver=`git rev-parse --short HEAD` -X main.buildTime=$now -w -s" -o dist/macos/ github.com/Brndan/syndecharge

@@ -71,8 +71,13 @@ func exportSyndicats(opts commandlineFlags) {
 		for _, file := range fileList {
 			fileFullPath = filepath.Join(folderPath, file.Name())
 			if checkIfXlsx, _ := path.Match("*.xlsx", file.Name()); checkIfXlsx {
-				fmt.Fprintf(os.Stderr, "%s\n", file.Name())
-				extractRange(fileFullPath, clrange, exportFile)
+				fmt.Fprintf(os.Stderr, "%s : ", file.Name())
+				err := extractRange(fileFullPath, clrange, exportFile)
+				if err != nil {
+					fmt.Fprintf(os.Stderr, "%s\n", err)
+				} else {
+					fmt.Fprintln(os.Stderr, "OK")
+				}
 			}
 		}
 		outputFullPath, _ := filepath.Abs(opts.outputFile)

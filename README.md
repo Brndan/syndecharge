@@ -63,3 +63,5 @@ La redirection risque de poser des problèmes d’encodage sous Windows.
 Le programme est codé en [Go](https://golang.org/dl/).
 
 Pour construire le programme, lancer le script `build.sh` sous Linux, `build.ps1` sous Windows.
+
+Pour avoir une idée de quelles plateformes sont supportées, utilisez la commande `go tool dist list`

@@ -20,6 +20,10 @@ func exportSyndicats(opts commandlineFlags) {
 	)
 
 	clrange := rangeCoordinates(opts.rangeStart, opts.rangeEnd)
+	if clrange.BeginX > clrange.EndX || clrange.BeginY > clrange.EndY {
+		fmt.Fprintf(os.Stderr, "Vous avez spécifié un début de plage %s plus grand que la fin de plage %s.\nImpossible de continuer.\n", opts.rangeStart, opts.rangeEnd)
+		os.Exit(1)
+	}
 
 	var headerBar []string
 

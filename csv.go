@@ -7,6 +7,9 @@ import (
 	"github.com/tealeg/xlsx"
 )
 
+// Ouvre un fichier file. Extrait la plage de données cellRange, et l’imprime
+// sur la sortie standard
+// TODO : error-handling
 func printCSV(file string, clRange cellRange) (err error) {
 
 	fileSlice, err := xlsx.FileToSlice(file)

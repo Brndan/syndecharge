@@ -2,7 +2,7 @@
 
 # Script de construction du programme
 # bash build.sh install → installe le programme dans le GOPATH
-# bash build.sh         → compile pour Windows et Linux
+# bash build.sh         → compile pour Windows, Linux et macOS
 
 # Variables dans le code GO changées au moment du link
 # -X main.sha1ver → ajoute au moment du link l'identifiant git du commit

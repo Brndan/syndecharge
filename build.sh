@@ -10,11 +10,13 @@
 
 # -w -s → supprime les infos de débogage : diminue le poids du binaire
 
-now=$(date +'%Y-%m-%d_%T')
+NOW=$(date +'%Y-%m-%d_%T')
+SHA1VER=$(git rev-parse --short HEAD)
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$1" = "install" ]
 then
-    go install -ldflags "-X main.sha1ver=`git rev-parse --short HEAD` -X main.buildTime=$now" 
+    go install -ldflags "-X main.sha1ver=$SHA1VER -X main.buildTime=$NOW -X main.branch=$BRANCH -w -s" 
 exit 0
 
 fi
@@ -22,6 +24,6 @@ fi
 rm -r dist/
 mkdir -p dist/{linux,macos,windows}
 
-env GOOS=linux GOARCH=amd64 go build -ldflags "-X main.sha1ver=`git rev-parse --short HEAD` -X main.buildTime=$now -w -s"  -o dist/linux/ github.com/Brndan/syndecharge
-env GOOS=windows GOARCH=amd64 go build -ldflags "-X main.sha1ver=`git rev-parse --short HEAD` -X main.buildTime=$now -w -s" -o dist/windows/ github.com/Brndan/syndecharge
-env GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.sha1ver=`git rev-parse --short HEAD` -X main.buildTime=$now -w -s" -o dist/macos/ github.com/Brndan/syndecharge
+env GOOS=linux GOARCH=amd64 go build -ldflags "-X main.sha1ver=$SHA1VER -X main.buildTime=$NOW -X main.branch=$BRANCH -w -s"  -o dist/linux/ github.com/Brndan/syndecharge
+env GOOS=windows GOARCH=amd64 go build -ldflags "-X main.sha1ver=$SHA1VER -X main.buildTime=$NOW -X main.branch=$BRANCH -w -s" -o dist/windows/ github.com/Brndan/syndecharge
+env GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.sha1ver=$SHA1VER -X main.buildTime=$NOW -X main.branch=$BRANCH -w -s" -o dist/macos/ github.com/Brndan/syndecharge

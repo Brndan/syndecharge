@@ -21,7 +21,7 @@ func main() {
 
 	switch {
 	case options.versionFlag:
-		fmt.Printf("Date de compilation : %s\nIdentifiant de version : %s", buildTime, sha1ver)
+		fmt.Printf("Date de compilation : %s\nIdentifiant de version : %s sur la branche %s\n", buildTime, sha1ver, branch)
 		os.Exit(0)
 	case (options.syndicatsFlag || options.ctsFlag) && !(options.syndicatsFlag && options.ctsFlag):
 		exportSyndicats(options)

@@ -1,4 +1,4 @@
-package main
+package problem
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 
 // Si une erreur a eu lieu, arrête immédiatement le progamme et affiche une
 // erreur
-func checkErr(err error) {
+func CheckErr(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}

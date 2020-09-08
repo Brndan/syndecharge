@@ -6,6 +6,8 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	
+	"github.com/Brndan/syndecharge/problem"
 
 	"github.com/tealeg/xlsx"
 )
@@ -37,7 +39,7 @@ func exportSyndicats(opts commandlineFlags) {
 	// Récupère le nom de chaque fichier à traiter
 	folderPath, _ := filepath.Abs(opts.inputFiles)
 	fileList, err := ioutil.ReadDir(folderPath)
-	checkErr(err)
+	problem.CheckErr(err)
 
 	switch {
 	case opts.csvFlag:
@@ -62,7 +64,7 @@ func exportSyndicats(opts commandlineFlags) {
 	default:
 		f := xlsx.NewFile()
 		exportFile.Sheet, err = f.AddSheet("Feuille1")
-		checkErr(err)
+		problem.CheckErr(err)
 		// On crée la première ligne du tableau avec les en-têtes
 		exportFile.Row = exportFile.Sheet.AddRow()
 		for _, col := range headerBar {
@@ -86,7 +88,7 @@ func exportSyndicats(opts commandlineFlags) {
 		}
 		outputFullPath, _ := filepath.Abs(opts.outputFile)
 		err = f.Save(outputFullPath)
-		checkErr(err)
+		problem.CheckErr(err)
 	}
 
 	return

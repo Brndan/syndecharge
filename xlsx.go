@@ -4,6 +4,8 @@ import (
 	"errors"
 	"regexp"
 	"strconv"
+	
+	"github.com/Brndan/syndecharge/problem"
 
 	"github.com/tealeg/xlsx"
 )
@@ -39,7 +41,7 @@ type xlsxObject struct {
 func rangeCoordinates(rangeStart, rangeEnd string) (clr cellRange) {
 	var err error
 	clr.BeginX, clr.BeginY, err = xlsx.GetCoordsFromCellIDString(rangeStart)
-	checkErr(err)
+	problem.CheckErr(err)
 	clr.EndX, clr.EndY, err = xlsx.GetCoordsFromCellIDString(rangeEnd)
 	return
 }
@@ -48,7 +50,7 @@ func rangeCoordinates(rangeStart, rangeEnd string) (clr cellRange) {
 // la suite d'un objet destXlsx déjà en mémoire
 func extractRange(file string, clr cellRange, destXlsx xlsxObject) (err error) {
 	fileSlice, err := xlsx.FileToSlice(file)
-	checkErr(err)
+	problem.CheckErr(err)
 	if clr.BeginY >= len(fileSlice[0]) || clr.EndY >= len(fileSlice[0]) {
 		return errors.New("la plage spécifiée dépasse le nombre de lignes du fichier")
 	}

@@ -3,12 +3,14 @@ package main
 import (
 	"fmt"
 	"os"
+	
+	"github.com/Brndan/syndecharge/problem"
 )
 
 func main() {
 
 	cwd, err := os.Getwd()
-	checkErr(err)
+	problem.CheckErr(err)
 
 	var options commandlineFlags
 

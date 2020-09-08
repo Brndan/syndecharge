@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"regexp"
+	"github.com/Brndan/syndecharge/problem"
 
 	"github.com/tealeg/xlsx"
 )
@@ -13,7 +14,7 @@ import (
 func printCSV(file string, clRange cellRange) (err error) {
 
 	fileSlice, err := xlsx.FileToSlice(file)
-	checkErr(err)
+	problem.CheckErr(err)
 	for row := clRange.BeginY; row <= clRange.EndY; row++ {
 		if fileSlice[0][row][clRange.BeginX+1] != "" {
 			for col := clRange.BeginX; col <= clRange.EndX; col++ {

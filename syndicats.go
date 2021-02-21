@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
-	
+
 	"github.com/Brndan/syndecharge/problem"
 
 	"github.com/tealeg/xlsx"
@@ -38,7 +37,7 @@ func exportSyndicats(opts commandlineFlags) {
 
 	// Récupère le nom de chaque fichier à traiter
 	folderPath, _ := filepath.Abs(opts.inputFiles)
-	fileList, err := ioutil.ReadDir(folderPath)
+	fileList, err := os.ReadDir(folderPath)
 	problem.CheckErr(err)
 
 	switch {

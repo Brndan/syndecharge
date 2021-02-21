@@ -23,4 +23,7 @@ syndecharge
 
 # fichiers de test
 tableaux
+
+# sorties à la compilation
+dist/
 Tableaux

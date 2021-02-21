@@ -27,7 +27,8 @@ mkdir -p dist/{linux,macos,windows}
 
 env GOOS=linux GOARCH=amd64 go build -ldflags "-X main.sha1ver=$SHA1VER -X main.buildTime=$NOW -X main.branch=$BRANCH -w -s"  -o dist/linux/ github.com/Brndan/syndecharge
 env GOOS=windows GOARCH=amd64 go build -ldflags "-X main.sha1ver=$SHA1VER -X main.buildTime=$NOW -X main.branch=$BRANCH -w -s" -o dist/windows/ github.com/Brndan/syndecharge
-env GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.sha1ver=$SHA1VER -X main.buildTime=$NOW -X main.branch=$BRANCH -w -s" -o dist/macos/ github.com/Brndan/syndecharge
+env GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.sha1ver=$SHA1VER -X main.buildTime=$NOW -X main.branch=$BRANCH -w -s" -o dist/macos/syndecharge-intel github.com/Brndan/syndecharge
+env GOOS=darwin GOARCH=arm64 go build -ldflags "-X main.sha1ver=$SHA1VER -X main.buildTime=$NOW -X main.branch=$BRANCH -w -s" -o dist/macos/syndecharge-applesilicon github.com/Brndan/syndecharge
 
 if [ "$1" = "compress" ]
 then
